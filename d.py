@@ -1,5 +1,4 @@
-# Authors: Alex, Emil, Mikael
-# Gruppe 11
+from itertools import combinations
 
 class Ordre():
     def __init__(self, by, volum, vekt, pris):
@@ -25,33 +24,37 @@ ordre = [
     Ordre("Porsgrunn", 12, 3, 19)
 ]
 
-def ranger(volum, vekt, pris):
-    volVekt = volum + vekt
-    return volVekt / pris
+def rSubset(arr, r):
+    return list(combinations(arr, r))
 
-arrMain = []
+def create_selection():
+    selection = []
+    for x in range(2,9):
+        subset = rSubset(ordre, x)
+        selection += subset
+    return selection
 
-def printCombination(arr, n, r):
-	data = [0] * r
-	combinationUtil(arr, data, 0, n - 1, 0, r)
+def check_if_possible():
+    selection = create_selection()
 
-def combinationUtil(arr, data, start, end, index, r):
-	if index == r:
-		for j in range(r):
-			print(data[j], end = ", ",)
-		print()
-		return
-        
-	i = start
-	while i <= end and end - i + 1 >= r - index:
-		data[index] = arr[i].by
-		combinationUtil(arr, data, i + 1, end, index + 1, r)
-		i += 1
+    for subarray in selection:
+        volum = 0
+        pris = 0
+        vekt = 0
+        ordrenavn = []
+        for item in subarray:
+            print(item.by)
+            if volum + item.volum <= 81 and vekt + item.vekt <= 30:
+                volum += item.volum
+                vekt += item.vekt
+                pris += item.pris
+                ordrenavn.append(item.by)
+            else:
+                break
+        if pris > 116:
+            print(f'Lets go! Denne turen tjener vi {pris}000,- på\nDen går fra:')
+            for navn in ordrenavn:
+                print(navn, end=" – ")
+            print("\n")
 
-n = len(ordre)
-for x in range(1, 9):
-    printCombination(ordre, n, x)
-
-
-
-        
+check_if_possible()
