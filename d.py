@@ -36,14 +36,12 @@ def create_selection():
 
 def check_if_possible():
     selection = create_selection()
-
     for subarray in selection:
         volum = 0
         pris = 0
         vekt = 0
         ordrenavn = []
         for item in subarray:
-            print(item.by)
             if volum + item.volum <= 81 and vekt + item.vekt <= 30:
                 volum += item.volum
                 vekt += item.vekt
@@ -52,9 +50,9 @@ def check_if_possible():
             else:
                 break
         if pris > 116:
-            print(f'Lets go! Denne turen tjener vi {pris}000,- på\nDen går fra:')
+            print(f'Lets go! Denne turen tjener vi {pris}000,- på\nMed pakker til:\n')
             for navn in ordrenavn:
                 print(navn, end=" – ")
-            print("\n")
+            print()
 
 check_if_possible()
